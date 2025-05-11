@@ -56,7 +56,7 @@ class Email():
 
         # Add header as key/value pair to attachment part
         part.add_header("Content-Disposition",
-                        "attachment; filename= {0}".format(filename = os.path.basename(file_path))
+                        "attachment; filename= {0}".format(os.path.basename(file_path))
                         )
         # Add attachment to message and convert message to string
         self.msg.attach(part)
