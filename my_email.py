@@ -3,6 +3,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.base import MIMEBase
 from email import encoders
 import smtplib, ssl
+import os
 
 class Email():
 
@@ -43,8 +44,8 @@ class Email():
   def add_attachments(self):
 
     if self.attachments is not None:
-      for filename in self.attachments:
-        with open(filename, "rb") as file:
+      for file_path in self.attachments:
+        with open(file_path, "rb") as file:
           # Add file as application/octet-stream
           # Email client can usually download this automatically as attachment
           part = MIMEBase("application", "octet-stream")
@@ -55,7 +56,7 @@ class Email():
 
         # Add header as key/value pair to attachment part
         part.add_header("Content-Disposition",
-                        "attachment; filename= {0}".format(filename)
+                        "attachment; filename= {0}".format(filename = os.path.basename(file_path))
                         )
         # Add attachment to message and convert message to string
         self.msg.attach(part)
